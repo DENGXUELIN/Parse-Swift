@@ -138,7 +138,7 @@ public extension ParseMicrosoft {
         guard AuthenticationKeys.id.verifyMandatoryKeys(authData: authData) else {
             callbackQueue.async {
                 completion(.failure(.init(code: .unknownError,
-                                          message: "Should have authData in consisting of keys \"code\" and \"redirectURI\", or \"id\" and \"accessToken\".")))
+                                          message: "Should have authData consisting of keys \"code\" and \"redirectURI\", or \"id\" and \"accessToken\".")))
             }
             return
         }
@@ -207,7 +207,7 @@ public extension ParseMicrosoft {
         guard AuthenticationKeys.id.verifyMandatoryKeys(authData: authData) else {
             callbackQueue.async {
                 completion(.failure(.init(code: .unknownError,
-                                          message: "Should have authData in consisting of keys \"code\" and \"redirectURI\", or \"id\" and \"accessToken\".")))
+                                          message: "Should have authData consisting of keys \"code\" and \"redirectURI\", or \"id\" and \"accessToken\".")))
             }
             return
         }

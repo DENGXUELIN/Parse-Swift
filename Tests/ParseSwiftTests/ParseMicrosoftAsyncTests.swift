@@ -125,6 +125,43 @@ class ParseMicrosoftAsyncTests: XCTestCase {
     }
 
     @MainActor
+    func testLoginInsecureAuthMode() async throws {
+        var serverResponse = LoginSignupResponse()
+        let authData = ParseMicrosoft<User>
+            .AuthenticationKeys.id.makeDictionary(id: "testing",
+                                                  accessToken: "access_token")
+        serverResponse.username = "hello"
+        serverResponse.password = "world"
+        serverResponse.objectId = "yarr"
+        serverResponse.sessionToken = "myToken"
+        serverResponse.authData = [serverResponse.microsoft.__type: authData]
+        serverResponse.createdAt = Date()
+        serverResponse.updatedAt = serverResponse.createdAt?.addingTimeInterval(+300)
+
+        var userOnServer: User!
+
+        let encoded: Data!
+        do {
+            encoded = try serverResponse.getEncoder().encode(serverResponse, skipKeys: .none)
+            //Get dates in correct format from ParseDecoding strategy
+            userOnServer = try serverResponse.getDecoder().decode(User.self, from: encoded)
+        } catch {
+            XCTFail("Should encode/decode. Error \(error)")
+            return
+        }
+        MockURLProtocol.mockRequests { _ in
+            return MockURLResponse(data: encoded, statusCode: 200, delay: 0.0)
+        }
+
+        let user = try await User.microsoft.login(id: "testing", accessToken: "access_token")
+        XCTAssertEqual(user, User.current)
+        XCTAssertEqual(user, userOnServer)
+        XCTAssertEqual(user.username, "hello")
+        XCTAssertEqual(user.password, "world")
+        XCTAssertTrue(user.microsoft.isLinked)
+    }
+
+    @MainActor
     func testLoginAuthData() async throws {
         var serverResponse = LoginSignupResponse()
         let authData = ParseMicrosoft<User>
@@ -201,6 +238,38 @@ class ParseMicrosoftAsyncTests: XCTestCase {
 
         let user = try await User.microsoft.link(code: "auth_code",
                                                  redirectURI: "https://example.com/callback")
+        XCTAssertEqual(user, User.current)
+        XCTAssertEqual(user.updatedAt, userOnServer.updatedAt)
+        XCTAssertEqual(user.username, "hello10")
+        XCTAssertNil(user.password)
+        XCTAssertTrue(user.microsoft.isLinked)
+        XCTAssertFalse(user.anonymous.isLinked)
+    }
+
+    @MainActor
+    func testLinkInsecureAuthMode() async throws {
+        _ = try await loginNormally()
+        MockURLProtocol.removeAll()
+
+        var serverResponse = LoginSignupResponse()
+        serverResponse.updatedAt = Date()
+
+        var userOnServer: User!
+
+        let encoded: Data!
+        do {
+            encoded = try serverResponse.getEncoder().encode(serverResponse, skipKeys: .none)
+            //Get dates in correct format from ParseDecoding strategy
+            userOnServer = try serverResponse.getDecoder().decode(User.self, from: encoded)
+        } catch {
+            XCTFail("Should encode/decode. Error \(error)")
+            return
+        }
+        MockURLProtocol.mockRequests { _ in
+            return MockURLResponse(data: encoded, statusCode: 200, delay: 0.0)
+        }
+
+        let user = try await User.microsoft.link(id: "testing", accessToken: "access_token")
         XCTAssertEqual(user, User.current)
         XCTAssertEqual(user.updatedAt, userOnServer.updatedAt)
         XCTAssertEqual(user.username, "hello10")

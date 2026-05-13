@@ -30,7 +30,7 @@ public extension ParseMicrosoft {
                        redirectURI: redirectURI,
                        id: id,
                        options: options,
-                       completion: continuation.resume)
+                       completion: continuation.resume(with:))
         }
     }
 
@@ -49,7 +49,7 @@ public extension ParseMicrosoft {
             self.login(id: id,
                        accessToken: accessToken,
                        options: options,
-                       completion: continuation.resume)
+                       completion: continuation.resume(with:))
         }
     }
 
@@ -64,7 +64,7 @@ public extension ParseMicrosoft {
         try await withCheckedThrowingContinuation { continuation in
             self.login(authData: authData,
                        options: options,
-                       completion: continuation.resume)
+                       completion: continuation.resume(with:))
         }
     }
 }
@@ -89,7 +89,7 @@ public extension ParseMicrosoft {
                       redirectURI: redirectURI,
                       id: id,
                       options: options,
-                      completion: continuation.resume)
+                      completion: continuation.resume(with:))
         }
     }
 
@@ -108,7 +108,7 @@ public extension ParseMicrosoft {
             self.link(id: id,
                       accessToken: accessToken,
                       options: options,
-                      completion: continuation.resume)
+                      completion: continuation.resume(with:))
         }
     }
 
@@ -124,7 +124,7 @@ public extension ParseMicrosoft {
         try await withCheckedThrowingContinuation { continuation in
             self.link(authData: authData,
                       options: options,
-                      completion: continuation.resume)
+                      completion: continuation.resume(with:))
         }
     }
 }
