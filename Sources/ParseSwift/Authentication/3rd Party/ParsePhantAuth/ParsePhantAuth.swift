@@ -86,7 +86,7 @@ public extension ParsePhantAuth {
         guard AuthenticationKeys.id.verifyMandatoryKeys(authData: authData) else {
             callbackQueue.async {
                 completion(.failure(.init(code: .unknownError,
-                                          message: "Should have authData consisting of keys \"id\" and \"accessToken\".")))
+                                          message: "Should have authData consisting of keys \"id\" and \"access_token\".")))
             }
             return
         }
@@ -130,7 +130,7 @@ public extension ParsePhantAuth {
         guard AuthenticationKeys.id.verifyMandatoryKeys(authData: authData) else {
             callbackQueue.async {
                 completion(.failure(.init(code: .unknownError,
-                                          message: "Should have authData consisting of keys \"id\" and \"accessToken\".")))
+                                          message: "Should have authData consisting of keys \"id\" and \"access_token\".")))
             }
             return
         }
