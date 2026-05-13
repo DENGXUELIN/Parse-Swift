@@ -88,7 +88,7 @@ class ParseMicrosoftCombineTests: XCTestCase {
 
     func testLogin() {
         var subscriptions = Set<AnyCancellable>()
-        let expectation1 = XCTestExpectation(description: "Save")
+        let expectation1 = XCTestExpectation(description: "Login with Microsoft")
 
         var serverResponse = LoginSignupResponse()
         let authData = ParseMicrosoft<User>
@@ -141,7 +141,7 @@ class ParseMicrosoftCombineTests: XCTestCase {
 
     func testLoginInsecureAuthMode() {
         var subscriptions = Set<AnyCancellable>()
-        let expectation1 = XCTestExpectation(description: "Save")
+        let expectation1 = XCTestExpectation(description: "Login with Microsoft insecure auth")
 
         var serverResponse = LoginSignupResponse()
         let authData = ParseMicrosoft<User>
@@ -193,7 +193,7 @@ class ParseMicrosoftCombineTests: XCTestCase {
 
     func testLoginAuthData() {
         var subscriptions = Set<AnyCancellable>()
-        let expectation1 = XCTestExpectation(description: "Save")
+        let expectation1 = XCTestExpectation(description: "Login with Microsoft auth data")
 
         var serverResponse = LoginSignupResponse()
         let authData = ParseMicrosoft<User>
@@ -260,7 +260,7 @@ class ParseMicrosoftCombineTests: XCTestCase {
 
     func testLink() throws {
         var subscriptions = Set<AnyCancellable>()
-        let expectation1 = XCTestExpectation(description: "Save")
+        let expectation1 = XCTestExpectation(description: "Link Microsoft")
 
         _ = try loginNormally()
         MockURLProtocol.removeAll()
@@ -308,7 +308,7 @@ class ParseMicrosoftCombineTests: XCTestCase {
 
     func testLinkInsecureAuthMode() throws {
         var subscriptions = Set<AnyCancellable>()
-        let expectation1 = XCTestExpectation(description: "Save")
+        let expectation1 = XCTestExpectation(description: "Link Microsoft insecure auth")
 
         _ = try loginNormally()
         MockURLProtocol.removeAll()
@@ -355,7 +355,7 @@ class ParseMicrosoftCombineTests: XCTestCase {
 
     func testLinkAuthData() throws {
         var subscriptions = Set<AnyCancellable>()
-        let expectation1 = XCTestExpectation(description: "Save")
+        let expectation1 = XCTestExpectation(description: "Link Microsoft auth data")
 
         _ = try loginNormally()
         MockURLProtocol.removeAll()
@@ -406,7 +406,7 @@ class ParseMicrosoftCombineTests: XCTestCase {
 
     func testUnlink() throws {
         var subscriptions = Set<AnyCancellable>()
-        let expectation1 = XCTestExpectation(description: "Save")
+        let expectation1 = XCTestExpectation(description: "Unlink Microsoft")
 
         _ = try loginNormally()
         MockURLProtocol.removeAll()
